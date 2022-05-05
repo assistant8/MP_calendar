@@ -3,7 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/dlrhd/AndroidStudioProjects/Calendar/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/dlrhd/AndroidStudioProjects/Calendar/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.124" />
+        <entry key="..\:/Users/dlrhd/AndroidStudioProjects/Calendar/app/src/main/res/drawable/calendar_selector.xml" value="0.124" />
+        <entry key="..\:/Users/dlrhd/AndroidStudioProjects/Calendar/app/src/main/res/drawable/ic_launcher_background.xml" value="0.124" />
+        <entry key="..\:/Users/dlrhd/AndroidStudioProjects/Calendar/app/src/main/res/drawable/transparent_calendar_element.xml" value="0.124" />
+        <entry key="..\:/Users/dlrhd/AndroidStudioProjects/Calendar/app/src/main/res/layout/activity_main.xml" value="0.176" />
+        <entry key="..\:/Users/dlrhd/AndroidStudioProjects/Calendar/app/src/main/res/xml/calendar_selector.xml" value="0.25364583333333335" />
       </map>
     </option>
   </component>

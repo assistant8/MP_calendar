@@ -1,24 +1,38 @@
 package com.example.calendar;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.DayViewDecorator;
+import com.prolificinteractive.materialcalendarview.DayViewFacade;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.Collection;
+import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity
 {
     public String readDay = null;
     public String str = null;
-    public CalendarView calendarView;
+    MaterialCalendarView calendarView;
     public Button cha_Btn, del_Btn, save_Btn;
     public TextView diaryTextView, textView2, textView3;
     public EditText contextEditText;
@@ -35,14 +49,18 @@ public class MainActivity extends AppCompatActivity
         del_Btn = findViewById(R.id.del_Btn);
         cha_Btn = findViewById(R.id.cha_Btn);
         textView2 = findViewById(R.id.textView2); //일정 추가된 날짜 클릭 시 어떤 일정있나 보여주는 칸
-        textView3 = findViewById(R.id.textView3); //맨 위 달력이라 표시
+        //textView3 = findViewById(R.id.textView3); //맨 위 달력이라 표시
         contextEditText = findViewById(R.id.contextEditText); //선택 날짜 일정 수정하는 칸
+        RadioGroup ctype;
+        RadioButton radIndividual;
+        RadioButton radGroup;
 
-        //
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener()
+        // 날짜가 변경될 때 이벤트를 받기 위한 리스너
+        calendarView.setOnDateChangedListener(new OnDateSelectedListener()
         {
+            // 선택된 날짜를 알려주는 메서드
             @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth)
+            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected)
             {
                 //중간 날짜 표시, 저장 버튼, 일정 수정 - 보이도록
                 diaryTextView.setVisibility(View.VISIBLE);
@@ -53,10 +71,13 @@ public class MainActivity extends AppCompatActivity
                 cha_Btn.setVisibility(View.INVISIBLE);
                 del_Btn.setVisibility(View.INVISIBLE);
                 //중간 날짜 어케 보여줄지 + 일정 추가되는 칸 초기화
-                diaryTextView.setText(String.format("%d / %d / %d", year, month + 1, dayOfMonth));
+                diaryTextView.setText(String.format("%d / %d / %d",  date.getYear(), date.getMonth() + 1, date.getDay()));
                 contextEditText.setText("");
-                //
-                checkDay(year, month, dayOfMonth);
+                //빨간 점 찍기
+                calendarView.setSelectedDate(CalendarDay.today());
+                calendarView.addDecorator(new EventDecorator(Color.RED, Collections.singleton(CalendarDay.today())));
+                //이제 날짜 체크 후 일정 삽입 or 수정 작업
+                checkDay(date.getYear(), date.getMonth() + 1, date.getDay());
             }
         });
         //저장 버튼 클릭 시
@@ -198,4 +219,30 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
         }
     }
+
+//    private static class DayDecorator implements DayViewDecorator {
+//
+//        private final Drawable drawable;
+//
+//        public DayDecorator(Context context) {
+//            drawable = ContextCompat.getDrawable(context, R.drawable.calendar_selector);
+//        }
+//
+//        // true를 리턴 시 모든 요일에 내가 설정한 드로어블이 적용된다
+//        @Override
+//        public boolean shouldDecorate(CalendarDay day) {
+//            return true;
+//        }
+//
+//
+//
+//        // 일자 선택 시 내가 정의한 드로어블이 적용되도록 한다
+//        @Override
+//        public void decorate(DayViewFacade view) {
+//            view.setSelectionDrawable(drawable);
+////            view.addSpan(new StyleSpan(Typeface.BOLD));   // 달력 안의 모든 숫자들이 볼드 처리됨
+//        }
+//    }
+
 }
+
